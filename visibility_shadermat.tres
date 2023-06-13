@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://box2wgitfaogb"]
+
+[ext_resource type="Shader" path="res://Shaders/hide_shader.gdshader" id="1_siaed"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_siaed")
+shader_parameter/ref_position = Vector3(0, 0, 0)

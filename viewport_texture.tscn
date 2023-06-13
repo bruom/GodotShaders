@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqlqcm4r03x1g"]
+
+[ext_resource type="Shader" path="res://Shaders/viewport_tex_shader.gdshader" id="1_yueiy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r3ki5"]
+shader = ExtResource("1_yueiy")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_icuvo"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1xsg"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_icuvo")
+
+[sub_resource type="SphereMesh" id="SphereMesh_jjrdx"]
+
+[node name="Viewport Texture" type="Node3D"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+size = Vector2i(1024, 512)
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_r3ki5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_i1xsg")
+mesh = SubResource("SphereMesh_jjrdx")

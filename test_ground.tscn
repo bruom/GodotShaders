@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpyvet3611lmw"]
+
+[ext_resource type="Shader" path="res://Shaders/post_quad_test.gdshader" id="1_7jndq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjmvb"]
+render_priority = 0
+shader = ExtResource("1_7jndq")
+
+[sub_resource type="QuadMesh" id="QuadMesh_chwy4"]
+material = SubResource("ShaderMaterial_jjmvb")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a7knp"]
+
+[node name="TestGround" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+extra_cull_margin = 2323.13
+mesh = SubResource("QuadMesh_chwy4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270101, 0.439989, -1.46767)
+mesh = SubResource("BoxMesh_a7knp")

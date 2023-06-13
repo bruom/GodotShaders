@@ -1,0 +1,115 @@
+[gd_scene load_steps=20 format=3 uid="uid://cx8dm38ffh1no"]
+
+[ext_resource type="Shader" path="res://Shaders/normal_extrude_outline.gdshader" id="1_ssucv"]
+[ext_resource type="Shader" path="res://Shaders/post_depth_outline.gdshader" id="2_gdru0"]
+[ext_resource type="Shader" path="res://Shaders/outline_blur.gdshader" id="3_4sucx"]
+[ext_resource type="Shader" path="res://Shaders/outline_pixel.gdshader" id="3_uovka"]
+[ext_resource type="Script" path="res://outline_vpc.gd" id="5_xv4nq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1fhut"]
+render_priority = 0
+shader = ExtResource("1_ssucv")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yl46o"]
+next_pass = SubResource("ShaderMaterial_1fhut")
+
+[sub_resource type="BoxMesh" id="BoxMesh_0mp54"]
+material = SubResource("StandardMaterial3D_yl46o")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8xasr"]
+render_priority = 0
+shader = ExtResource("2_gdru0")
+shader_parameter/minDepth = 0.0
+shader_parameter/maxDepth = 1.0
+shader_parameter/thickness = 3.0
+shader_parameter/colorOutline = Color(0, 0, 0, 1)
+shader_parameter/zNear = 0.1
+shader_parameter/zFar = 15.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_jd7uk"]
+material = SubResource("ShaderMaterial_8xasr")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_upjml"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qv08f"]
+material = SubResource("StandardMaterial3D_upjml")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xctm"]
+render_priority = 0
+shader = ExtResource("3_uovka")
+shader_parameter/outline_width = 2.0
+shader_parameter/outline_color = Color(0.690196, 0.176471, 0.176471, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwif2"]
+next_pass = SubResource("ShaderMaterial_1xctm")
+
+[sub_resource type="SphereMesh" id="SphereMesh_svud6"]
+material = SubResource("StandardMaterial3D_nwif2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sh2bb"]
+shader = ExtResource("3_4sucx")
+shader_parameter/size = 10.0
+shader_parameter/outline_color = Color(0.721569, 0.431373, 0.545098, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1h12"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="Environment" id="Environment_dps5i"]
+
+[sub_resource type="World3D" id="World3D_tw1i2"]
+environment = SubResource("Environment_dps5i")
+
+[node name="Outlines" type="Node3D"]
+
+[node name="normal_extrude" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.70672, 0, 0)
+mesh = SubResource("BoxMesh_0mp54")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.0577205, 0, -0.998333, 0, 1, 0, 0.998333, 0, -0.0577205, 0, 0, 0)
+cull_mask = 1048063
+
+[node name="PostProcQuad" type="MeshInstance3D" parent="Camera3D"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_jd7uk")
+
+[node name="Camera3D2" type="Camera3D" parent="Camera3D"]
+visible = false
+cull_mask = 1048064
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.61425, 0, -0.00367928)
+mesh = SubResource("BoxMesh_qv08f")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.61425, 0, 1.32957)
+mesh = SubResource("BoxMesh_qv08f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.532714, 1.58761e-08, -0.846295, 0.586408, 0.721023, 0.369123, 0.610198, -0.692911, 0.384099, 0, 2.27143, 0)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000966311, 0, 0.625772)
+mesh = SubResource("SphereMesh_svud6")
+
+[node name="OutlineVpc" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_sh2bb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_xv4nq")
+outline_material = SubResource("StandardMaterial3D_x1h12")
+
+[node name="SubViewport" type="SubViewport" parent="OutlineVpc"]
+world_3d = SubResource("World3D_tw1i2")
+handle_input_locally = false
+size = Vector2i(1024, 600)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="OutlineVpc/SubViewport"]

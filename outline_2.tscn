@@ -1,0 +1,119 @@
+[gd_scene load_steps=16 format=3 uid="uid://dvmevg8v62nv8"]
+
+[ext_resource type="Shader" path="res://Shaders/stencil_draw.gdshader" id="1_7drjf"]
+[ext_resource type="Script" path="res://blittening.gd" id="1_gvxtv"]
+[ext_resource type="Shader" path="res://Shaders/stencil_outline.gdshader" id="1_maa75"]
+[ext_resource type="Shader" path="res://Shaders/stencil_draw_post.gdshader" id="2_42c4h"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mci0u"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vyfl4"]
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_ikwwh"]
+radial_steps = 16
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yvjdc"]
+
+[sub_resource type="Sky" id="Sky_v8poy"]
+sky_material = SubResource("ProceduralSkyMaterial_yvjdc")
+
+[sub_resource type="Environment" id="Environment_70kfn"]
+background_mode = 2
+background_color = Color(0.792157, 0.862745, 1, 1)
+background_energy_multiplier = 2.19
+sky = SubResource("Sky_v8poy")
+ambient_light_source = 2
+ambient_light_color = Color(0.854902, 0.854902, 0.854902, 1)
+
+[sub_resource type="Environment" id="Environment_wa1kv"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.168627, 1, 1, 1)
+ambient_light_energy = 16.0
+reflected_light_source = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p46r4"]
+render_priority = 0
+shader = ExtResource("2_42c4h")
+shader_parameter/cam_near = 0.05
+shader_parameter/cam_far = 10.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_nqilo"]
+material = SubResource("ShaderMaterial_p46r4")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_apeft"]
+shader = ExtResource("1_7drjf")
+shader_parameter/size = Vector2(0.1, 0.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1v60b"]
+shader = ExtResource("1_maa75")
+shader_parameter/depth_threshold = 0.01
+
+[node name="Outline2" type="Node3D"]
+script = ExtResource("1_gvxtv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31636, 0, 0.832744)
+layers = 513
+mesh = SubResource("BoxMesh_mci0u")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64083, 0.818042, -5.04252)
+layers = 513
+mesh = SubResource("SphereMesh_vyfl4")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.515861, -0.543629, -0.662084, 0, 0.772855, -0.634582, 0.856672, 0.327356, 0.398686, 1.8143, 0.0490439, -2.11186)
+layers = 513
+mesh = SubResource("TubeTrailMesh_ikwwh")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+cull_mask = 1048063
+environment = SubResource("Environment_70kfn")
+current = true
+
+[node name="OutlineViewport" type="SubViewport" parent="Camera3D"]
+transparent_bg = true
+render_target_update_mode = 4
+
+[node name="OutlineCamera" type="Camera3D" parent="Camera3D/OutlineViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+cull_mask = 1048064
+environment = SubResource("Environment_wa1kv")
+
+[node name="Quad" type="MeshInstance3D" parent="Camera3D/OutlineViewport/OutlineCamera"]
+layers = 512
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_nqilo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D/OutlineViewport/OutlineCamera"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Camera3D/OutlineViewport/OutlineCamera/CanvasLayer"]
+visible = false
+material = SubResource("ShaderMaterial_apeft")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Outline" type="CanvasLayer" parent="Camera3D/OutlineViewport/OutlineCamera"]
+
+[node name="ColorRect" type="ColorRect" parent="Camera3D/OutlineViewport/OutlineCamera/Outline"]
+material = SubResource("ShaderMaterial_1v60b")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite3D" type="Sprite3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.333)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.36671, 0)
