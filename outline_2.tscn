@@ -36,7 +36,7 @@ reflected_light_source = 1
 render_priority = 0
 shader = ExtResource("2_42c4h")
 shader_parameter/cam_near = 0.05
-shader_parameter/cam_far = 10.0
+shader_parameter/cam_far = 100.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_nqilo"]
 material = SubResource("ShaderMaterial_p46r4")
@@ -50,6 +50,7 @@ shader_parameter/size = Vector2(0.1, 0.1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1v60b"]
 shader = ExtResource("1_maa75")
 shader_parameter/depth_threshold = 0.01
+shader_parameter/outline_pixel_width = 5.0
 
 [node name="Outline2" type="Node3D"]
 script = ExtResource("1_gvxtv")

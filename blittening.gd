@@ -2,7 +2,6 @@ extends Node3D
 
 @onready var main_camera: Camera3D = $Camera3D
 @onready var outline_viewport: Viewport = $Camera3D/OutlineViewport
-@onready var quad: MeshInstance3D = $Camera3D/OutlineViewport/OutlineCamera/MeshInstance3D
 @onready var res_sprite = $Camera3D/Sprite3D
 
 func _process(delta):

@@ -1,0 +1,96 @@
+[gd_scene load_steps=12 format=3 uid="uid://5ah88rbuo1bw"]
+
+[ext_resource type="Shader" path="res://Shaders/stencil_outline_allinone.gdshader" id="1_r7h0l"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_f0ox5"]
+ground_color = Color(0.980392, 0.960784, 0.941176, 1)
+energy_multiplier = 2.0
+
+[sub_resource type="Sky" id="Sky_sf044"]
+sky_material = SubResource("PhysicalSkyMaterial_f0ox5")
+
+[sub_resource type="Environment" id="Environment_fbc72"]
+background_mode = 1
+background_color = Color(0.619608, 0.619608, 0.619608, 1)
+sky = SubResource("Sky_sf044")
+ambient_light_source = 2
+ambient_light_color = Color(0.529412, 0.529412, 0.529412, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ayps"]
+render_priority = 0
+shader = ExtResource("1_r7h0l")
+shader_parameter/depth_threshold = 0.001
+shader_parameter/outline_pixel_width = 3.0
+shader_parameter/cam_near = 0.05
+shader_parameter/cam_far = 50.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_pkt3s"]
+material = SubResource("ShaderMaterial_2ayps")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qrbly"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2s7mf"]
+material = SubResource("StandardMaterial3D_qrbly")
+
+[sub_resource type="SphereMesh" id="SphereMesh_rripi"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_uccqp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kc8if"]
+radius = 0.3
+height = 1.0
+
+[node name="Outline3" type="Node3D"]
+
+[node name="MainCamera" type="Camera3D" parent="."]
+cull_mask = 1048063
+environment = SubResource("Environment_fbc72")
+current = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MainCamera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MainCamera/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="OutlineCamera" type="Camera3D" parent="MainCamera/SubViewportContainer/SubViewport"]
+cull_mask = 1048064
+
+[node name="Quad" type="MeshInstance3D" parent="MainCamera/SubViewportContainer/SubViewport/OutlineCamera"]
+layers = 512
+cast_shadow = 0
+extra_cull_margin = 827.47
+mesh = SubResource("QuadMesh_pkt3s")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.876054, 0, -0.482212, 0, 1, 0, 0.482212, 0, 0.876054, 0, -0.218354, -2.25762)
+layers = 513
+mesh = SubResource("BoxMesh_2s7mf")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.96577, 0.444929, -5.50703)
+layers = 513
+mesh = SubResource("SphereMesh_rripi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.798415, 0.602108, 0, -0.602108, 0.798415, 0, 0, 0, 1, 1.17306, -0.597615, -3.87955)
+layers = 513
+mesh = SubResource("TorusMesh_uccqp")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.522677, 0.844581, -3.28159)
+layers = 513
+mesh = SubResource("CapsuleMesh_kc8if")

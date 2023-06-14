@@ -20,5 +20,8 @@ void fragment() {
 	float linear_depth = -view.z/10.0;
 	float normalized_depth = (linear_depth - cam_near)/(cam_far - cam_near);
 	ALBEDO = vec3(normalized_depth, 0.0, 0.0);
-	ALPHA = texture(screen_texture, SCREEN_UV).a;
+	if (texture(screen_texture, SCREEN_UV).a == 0.0) {
+		ALBEDO = vec3(0.0);
+	}
+	//ALPHA = texture(screen_texture, SCREEN_UV).a;
 }
