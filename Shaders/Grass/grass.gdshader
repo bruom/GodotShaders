@@ -31,9 +31,11 @@ void vertex() {
 		should_discard = 1.0;
 	}
 	vec2 mask_uv = vec2(NODE_POSITION_WORLD.x, NODE_POSITION_WORLD.z) / 10.0;
-	float mask_alpha = texture(grass_mask, mask_uv).a;
-	if (mask_alpha > 0.0) {
+	float mask_alpha = texture(grass_mask, mask_uv).r;
+	if (mask_alpha > 0.5) {
 		should_discard = 1.0;
+	} else {
+		VERTEX.y *= 1.0 - smoothstep(0.2, 0.5, mask_alpha);
 	}
 	VERTEX += (local_dir * (VERTEX.y * VERTEX.y)) / (dist / 2.0);
 	VERTEX += wind_direction(vec2(TIME * 0.005), MODEL_MATRIX) * (VERTEX.y * VERTEX.y) * 3.0;

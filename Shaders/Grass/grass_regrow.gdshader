@@ -9,5 +9,5 @@ void vertex() {
 void fragment() {
 	//float new_red = min(1.0, texture(current_texture, UV).r + 0.0);
 	//COLOR = vec4(new_red, texture(current_texture, UV).gba);
-	COLOR = texture(current_texture, UV);
+	COLOR = texture(current_texture, UV) * 0.1;
 }

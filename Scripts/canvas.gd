@@ -2,11 +2,17 @@ extends SubViewport
 
 @onready var brush = $Brush
 @onready var sprite: Sprite3D = $"../Sprite3D"
+
+func _ready():
+	sprite.texture = get_texture()
+
+func test_draw(uv: Vector2):
+	brush.test_draw(uv)
+
+#A bunch of code for compute shaders that ended up unused:
+
 var texture_size = nearest_po2(1024)
 var image_format
-
-var growth_interval: float = 1.0
-var current_interval: float = 0.0
 
 var shader_path: String = "res://Shaders/Grass/compute_grass.glsl"
 var rd: RenderingDevice
@@ -14,25 +20,16 @@ var image_rid: RID
 var shader_rid: RID
 var pipeline_rid: RID
 
-func _process(delta):
-	current_interval -= delta
-	if current_interval <= 0.0:
-		current_interval = growth_interval
-		regrow()
-
 func _notification(notif):
 	if notif == NOTIFICATION_PREDELETE:
-		cleanup_gpu()
-
-func test_draw(uv: Vector2):
-	brush.test_draw(uv)
+				cleanup_gpu()
 
 func regrow():
+	pass
 #	var cur_image = get_texture().get_image()
 #	var uniform_rid = prepare_img_for_shader(cur_image)
 #	var updated_image = compute_image(uniform_rid)
 #	brush.draw_full_texture(ImageTexture.create_from_image(updated_image))
-	sprite.texture = ImageTexture.create_from_image(get_texture().get_image())
 
 func init_gpu():
 	rd = RenderingServer.create_local_rendering_device()

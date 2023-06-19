@@ -56,6 +56,8 @@ albedo_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_x1rrf"]
 material = SubResource("StandardMaterial3D_8wf43")
+radius = 1.0
+height = 2.0
 
 [node name="Grass" type="Node3D"]
 
@@ -94,7 +96,7 @@ render_target_clear_mode = 1
 render_target_update_mode = 4
 script = ExtResource("4_ffjq7")
 
-[node name="Brush" type="Node2D" parent="Canvas"]
+[node name="Brush" type="TextureRect" parent="Canvas"]
 script = ExtResource("5_te5jc")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
@@ -102,3 +104,4 @@ transform = Transform3D(0.520682, 0, -0.853751, 0, 1, 0, 0.853751, 0, 0.520682, 
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(0.866287, 0, -0.499547, 0, 1, 0, 0.499547, 0, 0.866287, 4.47019, 1, -0.741564)
+visible = false
