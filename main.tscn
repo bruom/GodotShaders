@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx4m5c3cyp7tm"]
+[gd_scene load_steps=6 format=3 uid="uid://bp0emhvxu3j0j"]
 
-[ext_resource type="Shader" path="res://Shaders/water_surface.gdshader" id="1_bme8g"]
+[ext_resource type="Shader" path="res://Shaders/Water/water_surface.gdshader" id="1_hnjnj"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gam6s"]
 
@@ -9,7 +9,7 @@ noise = SubResource("FastNoiseLite_gam6s")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rd8lw"]
 render_priority = 0
-shader = ExtResource("1_bme8g")
+shader = ExtResource("1_hnjnj")
 shader_parameter/height_mult = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_fohv3")
 

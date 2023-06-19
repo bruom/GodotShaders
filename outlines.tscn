@@ -1,14 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://cx8dm38ffh1no"]
+[gd_scene load_steps=20 format=3 uid="uid://dvmhdth3gn765"]
 
-[ext_resource type="Shader" path="res://Shaders/normal_extrude_outline.gdshader" id="1_ssucv"]
-[ext_resource type="Shader" path="res://Shaders/post_depth_outline.gdshader" id="2_gdru0"]
-[ext_resource type="Shader" path="res://Shaders/outline_blur.gdshader" id="3_4sucx"]
-[ext_resource type="Shader" path="res://Shaders/outline_pixel.gdshader" id="3_uovka"]
+[ext_resource type="Shader" path="res://Shaders/Outline/normal_extrude_outline.gdshader" id="1_wclq2"]
+[ext_resource type="Shader" path="res://Shaders/Outline/post_depth_outline.gdshader" id="2_f62d1"]
+[ext_resource type="Shader" path="res://Shaders/Outline/outline_pixel.gdshader" id="3_52vjs"]
+[ext_resource type="Shader" path="res://Shaders/Outline/outline_blur.gdshader" id="4_1rxqw"]
 [ext_resource type="Script" path="res://outline_vpc.gd" id="5_xv4nq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1fhut"]
 render_priority = 0
-shader = ExtResource("1_ssucv")
+shader = ExtResource("1_wclq2")
 shader_parameter/outline_color = null
 shader_parameter/outline_width = 10.0
 
@@ -20,7 +20,7 @@ material = SubResource("StandardMaterial3D_yl46o")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8xasr"]
 render_priority = 0
-shader = ExtResource("2_gdru0")
+shader = ExtResource("2_f62d1")
 shader_parameter/minDepth = 0.0
 shader_parameter/maxDepth = 1.0
 shader_parameter/thickness = 3.0
@@ -40,7 +40,7 @@ material = SubResource("StandardMaterial3D_upjml")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1xctm"]
 render_priority = 0
-shader = ExtResource("3_uovka")
+shader = ExtResource("3_52vjs")
 shader_parameter/outline_width = 2.0
 shader_parameter/outline_color = Color(0.690196, 0.176471, 0.176471, 1)
 
@@ -51,7 +51,7 @@ next_pass = SubResource("ShaderMaterial_1xctm")
 material = SubResource("StandardMaterial3D_nwif2")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sh2bb"]
-shader = ExtResource("3_4sucx")
+shader = ExtResource("4_1rxqw")
 shader_parameter/size = 10.0
 shader_parameter/outline_color = Color(0.721569, 0.431373, 0.545098, 1)
 

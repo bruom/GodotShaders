@@ -1,63 +1,57 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvmxhynayskyt"]
+[gd_scene load_steps=12 format=3 uid="uid://dvmxhynayskyt"]
 
-[ext_resource type="Material" uid="uid://box2wgitfaogb" path="res://visibility_shadermat.tres" id="1_ray2t"]
 [ext_resource type="Script" path="res://source.gd" id="1_y18an"]
+[ext_resource type="Material" uid="uid://ck8fmp7rypkay" path="res://Shaders/Visibility/distance_shroud_mat.tres" id="2_np3bf"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8j20w"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7m7ax"]
+sky_energy_multiplier = 3.0
+ground_bottom_color = Color(0.419608, 0.364706, 0.301961, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_ubhve"]
-material = SubResource("StandardMaterial3D_8j20w")
+[sub_resource type="Sky" id="Sky_o7lgr"]
+sky_material = SubResource("ProceduralSkyMaterial_7m7ax")
 
-[sub_resource type="BoxMesh" id="BoxMesh_a8dho"]
-material = ExtResource("1_ray2t")
+[sub_resource type="Environment" id="Environment_yx6ji"]
+background_mode = 2
+sky = SubResource("Sky_o7lgr")
+ambient_light_color = Color(0.890196, 0.890196, 0.890196, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_nko4m"]
-size = Vector2(20, 20)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k76o8"]
+albedo_color = Color(0.913725, 0.666667, 0.384314, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ech0x"]
-material = ExtResource("1_ray2t")
-size = Vector3(2, 0.1, 2)
+[sub_resource type="SphereMesh" id="SphereMesh_puh1l"]
+material = SubResource("StandardMaterial3D_k76o8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wddch"]
+next_pass = ExtResource("2_np3bf")
+albedo_color = Color(0, 0.388235, 0.392157, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_drv7o"]
+material = SubResource("StandardMaterial3D_wddch")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jci44"]
+next_pass = ExtResource("2_np3bf")
+albedo_color = Color(0.870588, 0.705882, 0.392157, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gyr8g"]
+material = SubResource("StandardMaterial3D_jci44")
 
 [node name="Visibility" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.84917, 0)
+environment = SubResource("Environment_yx6ji")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.6099, 0)
-
-[node name="Source" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.144349, 0, -0.139009)
+[node name="source" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_puh1l")
 script = ExtResource("1_y18an")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Source"]
-mesh = SubResource("SphereMesh_ubhve")
-
-[node name="Target" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.86141, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6319, -0.0171254, 1.44725)
-mesh = SubResource("BoxMesh_a8dho")
-surface_material_override/0 = ExtResource("1_ray2t")
-
-[node name="Target2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34917, 0, -4.05828)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10994, 0, 2.84425)
-mesh = SubResource("BoxMesh_a8dho")
-
-[node name="Target3" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.80003, 0, 0.92684)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target3"]
-mesh = SubResource("BoxMesh_a8dho")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2269, 0)
-mesh = SubResource("PlaneMesh_nko4m")
+transform = Transform3D(1, 0, 0, 0, 0.811747, 0.584009, 0, -0.584009, 0.811747, -2.25478, 0, 1.42667)
+mesh = SubResource("TorusMesh_drv7o")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000567287, -1.02709, -0.00647581)
-mesh = SubResource("BoxMesh_ech0x")
+transform = Transform3D(0.753114, 0.61542, 0.232545, -0.351013, 0.674836, -0.649143, -0.556425, 0.407252, 0.724249, 1.72815, 0, -0.943908)
+mesh = SubResource("BoxMesh_gyr8g")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.728431, 0.685119, 0, -0.685119, 0.728431, 0, 2.40908, 0)

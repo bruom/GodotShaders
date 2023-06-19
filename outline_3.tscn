@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://5ah88rbuo1bw"]
+[gd_scene load_steps=12 format=3 uid="uid://bnyri0vl0ncvs"]
 
-[ext_resource type="Shader" path="res://Shaders/stencil_outline_allinone.gdshader" id="1_r7h0l"]
+[ext_resource type="Shader" path="res://Shaders/Outline/Pixel/stencil_outline_allinone.gdshader" id="1_ohsyk"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_f0ox5"]
 ground_color = Color(0.980392, 0.960784, 0.941176, 1)
@@ -18,7 +18,7 @@ ambient_light_color = Color(0.529412, 0.529412, 0.529412, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ayps"]
 render_priority = 0
-shader = ExtResource("1_r7h0l")
+shader = ExtResource("1_ohsyk")
 shader_parameter/depth_threshold = 0.001
 shader_parameter/outline_pixel_width = 3.0
 shader_parameter/cam_near = 0.05
@@ -50,6 +50,7 @@ environment = SubResource("Environment_fbc72")
 current = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MainCamera"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -61,12 +62,14 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1152, 648)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="OutlineCamera" type="Camera3D" parent="MainCamera/SubViewportContainer/SubViewport"]
+visible = false
 cull_mask = 1048064
 
 [node name="Quad" type="MeshInstance3D" parent="MainCamera/SubViewportContainer/SubViewport/OutlineCamera"]
+visible = false
 layers = 512
 cast_shadow = 0
 extra_cull_margin = 827.47

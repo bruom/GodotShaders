@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ck8fmp7rypkay"]
+
+[ext_resource type="Shader" path="res://Shaders/Visibility/distance_shroud.gdshader" id="1_7jd8k"]
+
+[resource]
+render_priority = 1
+shader = ExtResource("1_7jd8k")
+shader_parameter/reference_position = null
+shader_parameter/max_distance = 2.0

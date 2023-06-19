@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dvmevg8v62nv8"]
+[gd_scene load_steps=16 format=3 uid="uid://dtwlnboqaq1rg"]
 
-[ext_resource type="Shader" path="res://Shaders/stencil_draw.gdshader" id="1_7drjf"]
 [ext_resource type="Script" path="res://blittening.gd" id="1_gvxtv"]
-[ext_resource type="Shader" path="res://Shaders/stencil_outline.gdshader" id="1_maa75"]
-[ext_resource type="Shader" path="res://Shaders/stencil_draw_post.gdshader" id="2_42c4h"]
+[ext_resource type="Shader" path="res://Shaders/Outline/Pixel/stencil_draw_post.gdshader" id="2_l3hfa"]
+[ext_resource type="Shader" path="res://Shaders/Outline/Pixel/stencil_draw.gdshader" id="3_ssvp8"]
+[ext_resource type="Shader" path="res://Shaders/Outline/Pixel/stencil_outline.gdshader" id="4_m3psq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_mci0u"]
 
@@ -34,7 +34,7 @@ reflected_light_source = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p46r4"]
 render_priority = 0
-shader = ExtResource("2_42c4h")
+shader = ExtResource("2_l3hfa")
 shader_parameter/cam_near = 0.05
 shader_parameter/cam_far = 100.0
 
@@ -44,11 +44,11 @@ flip_faces = true
 size = Vector2(2, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_apeft"]
-shader = ExtResource("1_7drjf")
+shader = ExtResource("3_ssvp8")
 shader_parameter/size = Vector2(0.1, 0.1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1v60b"]
-shader = ExtResource("1_maa75")
+shader = ExtResource("4_m3psq")
 shader_parameter/depth_threshold = 0.01
 shader_parameter/outline_pixel_width = 5.0
 

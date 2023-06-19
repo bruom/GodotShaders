@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://mb01svq0pt56"]
+
+[ext_resource type="Shader" path="res://Shaders/Snow/snow_surface.gdshader" id="1_qm7pj"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h3fcq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hi4qb"]
+noise = SubResource("FastNoiseLite_h3fcq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jdn0i"]
+render_priority = 0
+shader = ExtResource("1_qm7pj")
+shader_parameter/snow_amount = null
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_hi4qb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3qpuy"]
+next_pass = SubResource("ShaderMaterial_jdn0i")
+albedo_color = Color(0.435294, 0.435294, 0.435294, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i11ey"]
+material = SubResource("StandardMaterial3D_3qpuy")
+subdivide_width = 10
+subdivide_depth = 10
+
+[node name="Snow" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.829886, -0.557158, 0.0294042, 0.557933, 0.828732, -0.0437366, -3.36929e-09, 0.052702, 0.99861, 0, 0, 0)
+mesh = SubResource("PlaneMesh_i11ey")

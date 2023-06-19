@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdq36civ0vlrp"]
+
+[ext_resource type="Script" path="res://Scripts/draw_test.gd" id="1_8dn0e"]
+[ext_resource type="Script" path="res://Scripts/canvas.gd" id="1_rcb0x"]
+[ext_resource type="Script" path="res://Scripts/brush.gd" id="2_5u2yg"]
+
+[sub_resource type="Environment" id="Environment_jrro2"]
+background_mode = 1
+background_color = Color(0.835294, 0.854902, 0.835294, 1)
+
+[node name="DrawToTexture" type="Node3D"]
+script = ExtResource("1_8dn0e")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+
+[node name="Canvas" type="SubViewport" parent="."]
+transparent_bg = true
+size_2d_override = Vector2i(512, 512)
+render_target_clear_mode = 1
+render_target_update_mode = 4
+script = ExtResource("1_rcb0x")
+
+[node name="Brush" type="Node2D" parent="Canvas"]
+script = ExtResource("2_5u2yg")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.02609)
+environment = SubResource("Environment_jrro2")
