@@ -15,8 +15,15 @@ void main() {
     vec4 existing_color = imageLoad(inout_image, texel);
     vec4 color = existing_color - 0.005;
     imageStore(inout_image, texel, color);
-    vec2 draw_coord = vec2(coord_buffer.coords[0], coord_buffer.coords[1]);
-    if (length(texel - draw_coord) < 20.0) {
+    bool should_draw = false;
+    for (int i = 0; i < coord_buffer.coords.length(); i += 3) {
+        vec2 draw_coord = vec2(coord_buffer.coords[i], coord_buffer.coords[i+1]);
+        if (length(texel - draw_coord) < coord_buffer.coords[i+2]) {
+            should_draw = true;
+            break;
+        }
+    }
+    if (should_draw) {
         imageStore(inout_image, texel, vec4(0.0, 0.0, 0.0, 1.0));
     }
 }

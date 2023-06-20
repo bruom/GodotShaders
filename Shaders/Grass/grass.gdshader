@@ -31,7 +31,7 @@ void vertex() {
 		should_discard = 1.0;
 	}
 	vec2 mask_uv = vec2(NODE_POSITION_WORLD.x, NODE_POSITION_WORLD.z) / 10.0;
-	float mask_alpha = texture(grass_mask, mask_uv).r;
+	float mask_alpha = texture(grass_mask, mask_uv).a;
 	if (mask_alpha > 0.5) {
 		should_discard = 1.0;
 	} else {
