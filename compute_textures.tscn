@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdg1y7nbbr5ys"]
+
+[ext_resource type="Script" path="res://compute_textures.gd" id="1_0e1xa"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_apkko"]
+
+[sub_resource type="Sky" id="Sky_2vp81"]
+sky_material = SubResource("ProceduralSkyMaterial_apkko")
+
+[sub_resource type="Environment" id="Environment_6t3pc"]
+background_mode = 2
+sky = SubResource("Sky_2vp81")
+
+[node name="ComputeTextures" type="Node3D"]
+script = ExtResource("1_0e1xa")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.4987)
+environment = SubResource("Environment_6t3pc")

@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://b08q410k3fl5f"]
+
+[ext_resource type="ArrayMesh" uid="uid://bq81qvi8d8a73" path="res://Meshes/RoundBottleSmooth/bottle.res" id="1_dnyq7"]
+[ext_resource type="Script" path="res://bottle_spin.gd" id="2_7wses"]
+[ext_resource type="ArrayMesh" uid="uid://bl00vvg5wutti" path="res://Meshes/RoundBottleSmooth/liquid.res" id="5_i1nrb"]
+[ext_resource type="ArrayMesh" uid="uid://cxp3awn88ecwi" path="res://Meshes/RoundBottleSmooth/cork.res" id="6_lj4of"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_y7wc4"]
+
+[sub_resource type="Sky" id="Sky_wclur"]
+sky_material = SubResource("ProceduralSkyMaterial_y7wc4")
+
+[sub_resource type="Environment" id="Environment_ldlbc"]
+background_mode = 2
+background_color = Color(0.396078, 0.301961, 0.0941176, 1)
+sky = SubResource("Sky_wclur")
+
+[node name="LiquidContainer" type="Node3D"]
+
+[node name="Bottle" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_dnyq7")
+script = ExtResource("2_7wses")
+
+[node name="Liquid" type="MeshInstance3D" parent="Bottle"]
+mesh = ExtResource("5_i1nrb")
+skeleton = NodePath("../..")
+
+[node name="Cork" type="MeshInstance3D" parent="Bottle"]
+mesh = ExtResource("6_lj4of")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.971994, 0.0371641, -0.232049, 0, 0.987417, 0.158141, 0.235006, -0.153712, 0.959763, -0.420216, 0.30273, 1.11705)
+environment = SubResource("Environment_ldlbc")
